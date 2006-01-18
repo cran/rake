@@ -1,0 +1,102 @@
+\documentclass[12pt]{TDH-article}
+%\VignetteIndexEntry{Rake Manual}
+\begin{document}
+
+\title{Rake Manual}
+\author{Toby Dylan Hocking}
+\maketitle
+
+\newcommand{\rake}{Rake}
+
+\section{Introduction}
+\rake\ is an R package that allows you to easily perform Rake analysis \cite{Lohr:rake}.
+
+This manual teaches how to use the \rake\ package by walking you through a tutorial rake analysis on the data that is provided with the package. For a more thorough overview of the \rake\ functions and their arguments, please refer to the package documentation pages. For a more detailed discussion of the theory, refer to \cite{Lohr:rake}.
+
+\section{Tutorial}
+For the tutorial analysis, we use the ASA certification data included
+with the \rake\ package, which is the same data as described in
+\cite{Lohr:certify}.
+
+A standard \rake\ analysis consists of 3 steps:
+\be
+\item Creating the {\tt "rake"} class object using the {\tt rake} function.
+\item Performing the rake weight adjustment using the {\tt rakeadj} function.
+\item Obtaining new sample weights and reweighted data  using the {\tt predict.rake} function.
+\ee
+
+These 3 steps have been wrapped into a function called {\tt simpleRake}.
+This effectively turns a 3-step analysis into a 1-step analysis, but should
+only be used if the {\tt "rake"} class object's breakdown of sample weights by
+class is of no interest.
+
+\subsection{{\tt rake}}
+The {\tt "rake"} class object contains a summary of sample weights, broken down by classes for 2 categorical variables of interest.
+
+<<>>=
+library(rake)
+data(certify)
+certify$COLLEGE[certify$COLLEGE != "P"] <- "N"
+certify$WORKENV[!certify$WORKENV %in% c("I", "A")] <- "O"
+r <- rake(certify, "COLLEGE", "WORKENV")
+print(r)
+@
+
+The idea behind raking is to re-weight the sample so that the marginal total sample weights, as summarized in the {\tt "rake"} class object, are equivalent to the known marginal total weights of the population.
+
+\subsection{{\tt rakeadj}}
+This re-weighting is accomplished with the {\tt rakeadj} function:
+
+<<>>=
+r <- rakeadj(r, statpoptotal, TRUE)
+print(r)
+print(r / sum(r) * sum(statpoptotal$weight[ statpoptotal$name == rownames(r) ]))
+@
+
+Note that in this dataset, we rake on the 2 categorical variables {\tt "WORKENV"} and {\tt "COLLEGE"} because we know that the population values for these variables:
+
+<<>>=
+print(statpoptotal)
+@
+
+The {\tt "rake"} class object maintains the weight sum of the sample, but its components are adjusted such that the marginal total sample weights now have the same ratio as those in the population.
+
+\subsection{{\tt predict.rake}}
+To obtain the corresponding re-weighted unit weights for the original sample data, use the {\tt predict.rake} function:
+
+<<>>=
+for (i in 1:5) {
+	cat("Variable:", names(certify)[i], "\n")
+	data <- summary(as.factor(certify[, i]))
+	pred <- predict(r, i, forcefactor = TRUE)$data.est
+	print(rbind(data, pred))
+	cat("\n")
+}
+@
+
+This function returns a list of three elements:
+\bd
+\ti[weight] Vector of re-weighted sample weights, in the same order as the sample data's rows.
+\ti[data] Vector of sample data, in the same order as the sample data's rows.
+\ti[data.est] Vector of sample data with the new values after re-weighting. For categorical data, this is a factor summary. For numeric data, this is a vector of re-weighed data, in the same order as the sample data's rows.
+\ed
+
+\subsection{{\tt simpleRake}}
+This wraps the raking process inside a single function:
+
+<<>>=
+example(simpleRake)
+@
+
+Note that you don't get access to the {\tt "rake"} class object. This is usually used if you are only interested in the sample weights after re-weighting.
+
+\section{Conclusion}
+\rake\ is a package that implements the robust technique of sample re-weighting based on the raking technique.
+
+The 3-step raking should be used for most applications to get a better feel for the sample data class weights, but the 1-step {\tt simpleRake} can be performed if only the unit sample weights are needed.
+
+\appendix
+\bibliographystyle{plain}
+\bibliography{TDH-MCB}
+
+\end{document}
