@@ -51,17 +51,18 @@
     five columns, the response is coded: 0 = no response, 1 = yes, 2 =
     possibly, 3 = no opinion, 4 = unlikely, 5 = no. Missing values for
     other questions are coded as blanks.)
-  }
-  \item{statpoptotal}{data.frame with 2 columns:}
-  \describe{
-    \item{name}{label for population characteristic. An element from
-      the "WORKENV" or "COLLEGE" column of \code{certify}, but with the
-      following meanings: A = Academia, I = Industry, O = All others, P
-      = Ph.D., N = All others.}
-    \item{weight}{number of members of the 1994 ASA with the
-      characteristic (i.e. the population weights.)}
+    \item{statpoptotal}{data.frame with 2 columns:}
+    \describe{
+      \item{name}{label for population characteristic. An element from
+	the "WORKENV" or "COLLEGE" column of \code{certify}, but with the
+	following meanings: A = Academia, I = Industry, O = All others, P
+	= Ph.D., N = All others.}
+      \item{weight}{number of members of the 1994 ASA with the
+	characteristic (i.e. the population weights.)}
+    }
   }
 }
+  
 
 \note{
   This data set is provided as an example for using the \code{rake}

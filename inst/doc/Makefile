@@ -1,2 +1,2 @@
 all: rake-manual.Snw
-	Sweave -ld rake-manual.Snw
+	R CMD Sweave rake-manual.Snw

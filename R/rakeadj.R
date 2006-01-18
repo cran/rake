@@ -10,7 +10,7 @@ function (rake, marg = stop("\nMarginal total population weights",
             "but must not in order for rake adjustment to succeed.")
     }
     if (class(marg) == "character") 
-        marg <- read.table(marg, header = T)
+        marg <- read.table(marg, header = TRUE)
     if (class(marg) == "data.frame") {
         margnames <- marg$name
         marg <- marg$weight
