@@ -1,0 +1,6 @@
+1.2 compress certify data set, add method tags to Rd, remove Makefile
+from inst/doc, more portable sweave/latex code for vignette.
+
+1.1 email update.
+
+1.0 initial release from berkeley.

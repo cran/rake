@@ -14,8 +14,8 @@
 }
 \usage{
 rakeTot(x)
-print.rake(x, ...)
-format.rake(x, ...)
+\method{print}{rake}(x, ...)
+\method{format}{rake}(x, ...)
 }
 \arguments{
   \item{x}{object of class "rake" created with the \code{rake}

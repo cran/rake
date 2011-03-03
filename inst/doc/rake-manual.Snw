@@ -1,4 +1,4 @@
-\documentclass[12pt]{TDH-article}
+\documentclass[12pt]{article}
 %\VignetteIndexEntry{Rake Manual}
 \begin{document}
 
@@ -9,21 +9,21 @@
 \newcommand{\rake}{Rake}
 
 \section{Introduction}
-\rake\ is an R package that allows you to easily perform Rake analysis \cite{Lohr:rake}.
+\rake\ is an R package that allows you to easily perform Rake analysis.
 
-This manual teaches how to use the \rake\ package by walking you through a tutorial rake analysis on the data that is provided with the package. For a more thorough overview of the \rake\ functions and their arguments, please refer to the package documentation pages. For a more detailed discussion of the theory, refer to \cite{Lohr:rake}.
+This manual teaches how to use the \rake\ package by walking you through a tutorial rake analysis on the data that is provided with the package. For a more thorough overview of the \rake\ functions and their arguments, please refer to the package documentation pages. For a more detailed discussion of the theory, refer to \cite[pp.~269--271]{Lohr}.
 
 \section{Tutorial}
 For the tutorial analysis, we use the ASA certification data included
 with the \rake\ package, which is the same data as described in
-\cite{Lohr:certify}.
+\cite[p.~439]{Lohr}.
 
 A standard \rake\ analysis consists of 3 steps:
-\be
+\begin{enumerate}
 \item Creating the {\tt "rake"} class object using the {\tt rake} function.
 \item Performing the rake weight adjustment using the {\tt rakeadj} function.
 \item Obtaining new sample weights and reweighted data  using the {\tt predict.rake} function.
-\ee
+\end{enumerate}
 
 These 3 steps have been wrapped into a function called {\tt simpleRake}.
 This effectively turns a 3-step analysis into a 1-step analysis, but should
@@ -75,11 +75,11 @@ for (i in 1:5) {
 @
 
 This function returns a list of three elements:
-\bd
-\ti[weight] Vector of re-weighted sample weights, in the same order as the sample data's rows.
-\ti[data] Vector of sample data, in the same order as the sample data's rows.
-\ti[data.est] Vector of sample data with the new values after re-weighting. For categorical data, this is a factor summary. For numeric data, this is a vector of re-weighed data, in the same order as the sample data's rows.
-\ed
+\begin{description}
+\item[weight] Vector of re-weighted sample weights, in the same order as the sample data's rows.
+\item[data] Vector of sample data, in the same order as the sample data's rows.
+\item[data.est] Vector of sample data with the new values after re-weighting. For categorical data, this is a factor summary. For numeric data, this is a vector of re-weighed data, in the same order as the sample data's rows.
+\end{description}
 
 \subsection{{\tt simpleRake}}
 This wraps the raking process inside a single function:
@@ -97,6 +97,6 @@ The 3-step raking should be used for most applications to get a better feel for 
 
 \appendix
 \bibliographystyle{plain}
-\bibliography{TDH-MCB}
+\bibliography{refs}
 
 \end{document}

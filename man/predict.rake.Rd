@@ -11,7 +11,7 @@
   
 }
 \usage{
-predict.rake(object,
+\method{predict}{rake}(object,
            col = stop("Prediction column (argument 'col') must be specified."),
            forcefactor = FALSE,
            data = eval(parse(text=dataname(rake)),parent.frame(1)),
